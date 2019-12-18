@@ -18,3 +18,16 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['-asked_datetime']
+
+
+class Answer(models.Model):
+    answer_text = models.TextField(max_length=256)
+    answer_for = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answered_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    answered_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)
+
+    def __str__(self):
+        return self.answer_text
+
+    class Meta:
+        ordering = ['-answered_datetime']
