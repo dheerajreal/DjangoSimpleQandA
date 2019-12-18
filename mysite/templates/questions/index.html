@@ -6,7 +6,7 @@
         <div class="card-body">
 
             <h4> <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a> </h4>
-            <p>{{question.question_description}}</p>
+            <p>{{question.question_description|linebreaks}}</p>
             <p class="text-muted"> asked by {{question.asked_by}}, {{question.asked_datetime|timesince}} ago </p>
 
         </div>

@@ -6,7 +6,7 @@
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
             <h4> {{object.question_text}} </h4>
-            <p>{{object.question_description}}</p>
+            <p>{{object.question_description|linebreaks}}</p>
             <p class="text-muted"> asked by {{object.asked_by}}, {{object.asked_datetime|timesince}} ago </p>
 
         </div>
