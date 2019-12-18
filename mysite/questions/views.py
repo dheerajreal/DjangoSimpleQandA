@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Question
 from django.views.generic import ListView, CreateView
 from .forms import QuestionCreateForm
@@ -25,3 +25,12 @@ class QuestionCreateView(CreateView):
     def form_valid(self, form):
         form.instance.asked_by = User.objects.get(username=self.request.user)
         return super().form_valid(form)
+
+
+def question_detail(request, pk):
+    template_name = "questions/detail.html"
+    question = get_object_or_404(Question, pk=pk)
+    context = {
+        "object": question
+    }
+    return render(request, template_name, context)
