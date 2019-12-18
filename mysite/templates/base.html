@@ -7,7 +7,9 @@
 {% include "components/styles.html" %}
 
 <body>
-    {% include "components/navbar.html" %} {% block content %} {% endblock %} {% include "components/javascript.html" %}
+    {% include "components/navbar.html" %} {% block content %} {% endblock %}
+    <div class="container col-md-6 mx-auto">{% include "components/pagination.html" %}</div>
+    {% include "components/javascript.html" %}
 </body>
 
 </html>
