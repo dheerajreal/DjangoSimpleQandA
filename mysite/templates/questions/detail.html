@@ -38,11 +38,11 @@
 
 
     <hr> {% for answer in answers %}
-    <div class="card border-primary  mt-4 col-md-6 mx-auto">
+    <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
+            <p class="text-muted"> answered by {{answer.answered_by}}, {{answer.answered_datetime|timesince}} ago </p>
 
             <p>{{answer.answer_text|linebreaks}}</p>
-            <p class="text-muted"> answered by {{answer.answered_by}}, {{answer.answered_datetime|timesince}} ago </p>
 
         </div>
     </div>
