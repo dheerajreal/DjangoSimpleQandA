@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="container">
+    <br>
+    <p>Question:</p>
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
             <h4> {{object.question_text}} </h4>
@@ -10,6 +12,12 @@
         </div>
     </div>
 </div>
+<br>
+<hr>
+<br>
+<div class="container">
+    <p>Answers:</p>
 
 
+</div>
 {% endblock %}

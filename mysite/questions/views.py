@@ -2,14 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import Question
 from django.views.generic import ListView, CreateView
 from .forms import QuestionCreateForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
-# Create your views here.
-
-
-def index(request):
-    return render(request, "base.html")
 
 
 class QuestionListView(ListView):
@@ -18,7 +13,7 @@ class QuestionListView(ListView):
     paginate_by = 5
 
 
-class QuestionCreateView(CreateView):
+class QuestionCreateView(LoginRequiredMixin, CreateView):
     form_class = QuestionCreateForm
     template_name = 'questions/create.html'
 
