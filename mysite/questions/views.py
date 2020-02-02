@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Question, Answer
-from django.views.generic import ListView, CreateView
-from .forms import QuestionCreateForm, AnswerCreateForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import Http404, get_object_or_404, render
+from django.views.generic import CreateView, ListView, UpdateView
+
+from .forms import AnswerCreateForm, QuestionCreateForm
+from .models import Answer, Question
+
 User = get_user_model()
 
 
@@ -20,6 +22,19 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.asked_by = User.objects.get(username=self.request.user)
         return super().form_valid(form)
+
+
+class QuestionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Question
+    template_name = "questions/update.html"
+    fields = ["question_text", "question_description"]
+    success_url = "/"
+
+    def form_valid(self, form):
+        if self.request.user == form.instance.asked_by:
+            return super().form_valid(form)
+        else:
+            raise Http404
 
 
 def question_detail(request, pk):

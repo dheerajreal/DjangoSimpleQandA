@@ -6,7 +6,9 @@
             <h3> {{object.question_text}} </h3>
             <p>{{object.question_description|linebreaks}}</p>
             <p class="text-muted"> asked by {{object.asked_by}}, {{object.asked_datetime|timesince}} ago </p>
-
+            {%  if object.asked_by == request.user %}
+            <a href="{% url 'question_edit' object.pk %}">Edit</a>
+            {% endif %}
         </div>
     </div>
 </div>
