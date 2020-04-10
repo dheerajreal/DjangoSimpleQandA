@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container ">
+    <br>
+    <h1 class="text-center"> {{ user.username }}</h1>
+
+    <div class="card border-primary  mt-4 col-md-8 mx-auto">
+        <div class="card-body">
+
+            <a href="{% url 'user_questions_list' user.username  %}">
+                <h3>Recent Questions by user</h3>
+            </a>
+            <br>
+            <a href="{% url 'user_answers_list' user.username  %}">
+                <h3>Recent Answers by user</h3>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

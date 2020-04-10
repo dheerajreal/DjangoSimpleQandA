@@ -85,3 +85,17 @@ def recent_user_answers(request, user_name):
         "user": user
     }
     return render(request, template_name, context)
+
+
+def specific_user_detail(request, user_name):
+    template_name = "user/detail.html"
+    try:
+        user = User.objects.get(username=user_name)
+    except User.DoesNotExist:
+        raise Http404
+
+    context = {
+
+        "user": user
+    }
+    return render(request, template_name, context)
