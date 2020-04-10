@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, Http404
 from django.http import HttpResponseForbidden
 from django.views.generic import CreateView, ListView, UpdateView
 
@@ -55,5 +55,19 @@ def question_detail(request, pk):
         "object": question,
         "answers": answers,
         "form": form
+    }
+    return render(request, template_name, context)
+
+
+def recent_user_questions(request, user_name):
+    template_name = "user/questions.html"
+    try:
+        user = User.objects.get(username=user_name)
+    except User.DoesNotExist:
+        raise Http404
+    queryset = Question.objects.filter(asked_by=user)[:5]
+    context = {
+        "object_list": queryset,
+        "user": user
     }
     return render(request, template_name, context)
