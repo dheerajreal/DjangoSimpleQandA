@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, render, Http404, redirect
 from django.http import HttpResponseForbidden
@@ -87,6 +88,7 @@ def recent_user_answers(request, user_name):
     return render(request, template_name, context)
 
 
+@login_required
 def specific_user_detail(request, user_name):
     template_name = "user/detail.html"
     try:
@@ -102,6 +104,7 @@ def specific_user_detail(request, user_name):
     return render(request, template_name, context)
 
 
+@login_required
 def user_profile_update(request):
     template_name = "accounts/edit.html"
     try:
