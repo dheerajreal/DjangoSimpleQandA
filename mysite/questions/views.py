@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import Http404, get_object_or_404, render
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseForbidden
 from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import AnswerCreateForm, QuestionCreateForm
@@ -24,17 +25,20 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class QuestionUpdateView(LoginRequiredMixin, UpdateView):
+class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Question
     template_name = "questions/update.html"
     fields = ["question_text", "question_description"]
     success_url = "/"
 
+    def test_func(self):
+        return self.request.user == self.get_object().asked_by
+
     def form_valid(self, form):
         if self.request.user == form.instance.asked_by:
             return super().form_valid(form)
         else:
-            raise Http404
+            return HttpResponseForbidden("Not allowed")
 
 
 def question_detail(request, pk):
