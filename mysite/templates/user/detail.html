@@ -4,11 +4,16 @@
     <br>
 
 
+
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
             <h1 class=> {{ user.username }}</h1>
             <h4 class="text-muted">{{ user.get_full_name }}</h4>
             <h4 class="text-muted">Member since : {{ user.date_joined }}</h4>
+            {% ifequal user.username request.user.username %}
+            <a class="btn btn-primary" href="{% url 'user_profile_update' %}">Edit Profile</a>
+            {% endifequal %}
+            <br>
             <br>
             <a href="{% url 'user_questions_list' user.username  %}">
                 <h3>Recent Questions by user</h3>
