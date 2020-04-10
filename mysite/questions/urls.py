@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (QuestionCreateView, QuestionListView, QuestionUpdateView,
-                    question_detail, recent_user_questions)
+                    question_detail, recent_user_questions, recent_user_answers)
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
@@ -13,4 +13,6 @@ urlpatterns = [
 
     path('user/<str:user_name>/questions', recent_user_questions,
          name="user_questions_list"),
+    path('user/<str:user_name>/answers', recent_user_answers,
+         name="user_answers_list"),
 ]

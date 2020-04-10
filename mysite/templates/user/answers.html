@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container ">
+    <br>
+    <h1 class="text-center">recent answers by {{ user.username }}</h1>
+    {% for answer in object_list %}
+    <div class="card border-primary  mt-4 col-md-8 mx-auto">
+        <div class="card-body">
+            <p class="text-muted"> answered by {{answer.answered_by}}, {{answer.answered_datetime|timesince}} ago </p>
+
+            <p>{{answer.answer_text|linebreaks}}</p>
+            <a href="{% url 'question_detail' answer.answer_for.pk %}">go to question</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Nothing Here</p>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

@@ -71,3 +71,17 @@ def recent_user_questions(request, user_name):
         "user": user
     }
     return render(request, template_name, context)
+
+
+def recent_user_answers(request, user_name):
+    template_name = "user/answers.html"
+    try:
+        user = User.objects.get(username=user_name)
+    except User.DoesNotExist:
+        raise Http404
+    queryset = Answer.objects.filter(answered_by=user)[:5]
+    context = {
+        "object_list": queryset,
+        "user": user
+    }
+    return render(request, template_name, context)
