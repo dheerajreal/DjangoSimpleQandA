@@ -2,11 +2,14 @@
 
 <div class="container ">
     <br>
-    <h1 class="text-center"> {{ user.username }}</h1>
+
 
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
-
+            <h1 class=> {{ user.username }}</h1>
+            <h4 class="text-muted">{{ user.get_full_name }}</h4>
+            <h4 class="text-muted">Member since : {{ user.date_joined }}</h4>
+            <br>
             <a href="{% url 'user_questions_list' user.username  %}">
                 <h3>Recent Questions by user</h3>
             </a>
