@@ -8,10 +8,15 @@
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
             <h1 class=> {{ user.username }}</h1>
+            <br>
             <h4 class="text-muted">{{ user.get_full_name }}</h4>
             <h4 class="text-muted">Member since : {{ user.date_joined }}</h4>
+            <br>
             {% ifequal user.username request.user.username %}
-            <a class="btn btn-primary" href="{% url 'user_profile_update' %}">Edit Profile</a>
+            <a class="btn btn-primary btn-block" href="{% url 'user_profile_update' %}">Edit Profile</a>
+            <a class="btn btn-primary btn-block" href="{% url 'password_change' %}">Change Password</a>
+
+
             {% endifequal %}
             <br>
             <br>
