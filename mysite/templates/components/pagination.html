@@ -1,18 +1,18 @@
-<div class="container col-md-6 mx-auto mt-3 mb-3">
+<div class="container  col-md-8 mx-auto mt-3 mb-3">
 
     {% if is_paginated %}
     <div class="pagination ">
-        <span class="step-links">
-        {% if page_obj.has_previous %}
-                <a class="btn-sm" href="?page=1">&laquo;first </a>
-                <a class="btn-sm" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <span class="step-links mx-auto">
+            {% if page_obj.has_previous %}
+            <a class="btn-sm" href="?page=1">&laquo; first </a>
+            <a class="btn-sm" href="?page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
-    
+
             <span class="btn-sm">
                 Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
             </span> {% if page_obj.has_next %}
-        <a class="btn-sm" href="?page={{ page_obj.next_page_number }}">next</a>
-        <a class="btn-sm" href="?page={{ page_obj.paginator.num_pages }}">last&raquo;</a> {% endif %}
+            <a class="btn-sm" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="btn-sm" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a> {% endif %}
         </span>
     </div>
     {% endif %}

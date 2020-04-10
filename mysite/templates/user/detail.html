@@ -13,19 +13,22 @@
             <h4 class="text-muted">Member since : {{ user.date_joined }}</h4>
             <br>
             {% ifequal user.username request.user.username %}
-            <a class="btn btn-primary btn-block" href="{% url 'user_profile_update' %}">Edit Profile</a>
-            <a class="btn btn-primary btn-block" href="{% url 'password_change' %}">Change Password</a>
+            <a class="btn btn-info btn-block" href="{% url 'user_profile_update' %}">
+                Edit Profile
+            </a>
+            <a class="btn btn-info btn-block" href="{% url 'password_change' %}">
+                Change Password
+            </a>
 
 
             {% endifequal %}
             <br>
-            <br>
-            <a href="{% url 'user_questions_list' user.username  %}">
-                <h3>Recent Questions by user</h3>
+
+            <a class="btn btn-outline-primary btn-block" href="{% url 'user_questions_list' user.username  %}">
+                Recent Questions by user
             </a>
-            <br>
-            <a href="{% url 'user_answers_list' user.username  %}">
-                <h3>Recent Answers by user</h3>
+            <a class="btn btn-outline-primary btn-block" href="{% url 'user_answers_list' user.username  %}">
+                Recent Answers by user
             </a>
         </div>
     </div>

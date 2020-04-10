@@ -10,16 +10,15 @@
                 {{object.asked_datetime|timesince}} ago
             </p>
             {%  if object.asked_by == request.user %}
-            <a href="{% url 'question_edit' object.pk %}">Edit</a>
+            <a class=" " href="{% url 'question_edit' object.pk %}">Edit</a>
             {% endif %}
+            <br><br>
+            <p> Number of Answers: {{ answers.count }}</p>
         </div>
     </div>
 </div>
-<br>
-<hr>
-<br>
+
 <div class="container">
-    <p>Number of Answers: {{ answers.count }}</p>
     <hr> {% for answer in answers %}
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
@@ -47,7 +46,7 @@
                 <form class="form-group" action="" method="post">
 
                     {% csrf_token %} {{form|crispy}}
-                    <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                    <button class="btn btn-outline-primary btn-block" type="submit">Submit Answer</button>
                 </form>
             </div>
         </div>
