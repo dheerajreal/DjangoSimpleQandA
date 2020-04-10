@@ -2,11 +2,12 @@ from django.urls import path
 
 from .views import (QuestionCreateView, QuestionListView, QuestionUpdateView,
                     question_detail, recent_user_questions,
-                    recent_user_answers, specific_user_detail
+                    recent_user_answers, specific_user_detail, user_profile_update
                     )
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
+    path('profile/', user_profile_update, name="user_profile_update"),
     path('create/', QuestionCreateView.as_view(), name="question_create"),
     path('q/<int:pk>/', question_detail, name="question_detail"),
     path('q/<int:pk>/edit', QuestionUpdateView.as_view(),

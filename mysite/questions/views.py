@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404, render, Http404
+from django.shortcuts import get_object_or_404, render, Http404, redirect
 from django.http import HttpResponseForbidden
 from django.views.generic import CreateView, ListView, UpdateView
 
-from .forms import AnswerCreateForm, QuestionCreateForm
+from .forms import AnswerCreateForm, QuestionCreateForm, UserEditForm
 from .models import Answer, Question
 
 User = get_user_model()
@@ -98,5 +98,22 @@ def specific_user_detail(request, user_name):
     context = {
 
         "user": user
+    }
+    return render(request, template_name, context)
+
+
+def user_profile_update(request):
+    template_name = "accounts/edit.html"
+    try:
+        user = User.objects.get(username=request.user)
+    except User.DoesNotExist:
+        raise Http404
+    form = UserEditForm(request.POST or None, instance=user)
+    if form.is_valid():
+        form.save()
+        return redirect("user_detail", user.username)
+    context = {
+        "user": user,
+        "form": form,
     }
     return render(request, template_name, context)
