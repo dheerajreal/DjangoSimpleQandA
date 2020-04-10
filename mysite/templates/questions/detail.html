@@ -5,7 +5,10 @@
         <div class="card-body">
             <h3> {{object.question_text}} </h3>
             <p>{{object.question_description|linebreaks}}</p>
-            <p class="text-muted"> asked by {{object.asked_by}}, {{object.asked_datetime|timesince}} ago </p>
+            <p class="text-muted"> asked by
+                <a href="{% url 'user_detail' object.asked_by %}">{{object.asked_by}}</a>,
+                {{object.asked_datetime|timesince}} ago
+            </p>
             {%  if object.asked_by == request.user %}
             <a href="{% url 'question_edit' object.pk %}">Edit</a>
             {% endif %}
@@ -20,7 +23,11 @@
     <hr> {% for answer in answers %}
     <div class="card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
-            <p class="text-muted"> answered by {{answer.answered_by}}, {{answer.answered_datetime|timesince}} ago </p>
+            <p class="text-muted"> answered by
+                <a href="{% url 'user_detail' answer.answered_by %}">
+                    {{answer.answered_by}}
+                </a> ,
+                {{answer.answered_datetime|timesince}} ago </p>
 
             <p>{{answer.answer_text|linebreaks}}</p>
 
