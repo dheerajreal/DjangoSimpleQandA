@@ -34,25 +34,44 @@
     {% endfor %}
 
 
-    <!--answer form-->
-    {% if user.is_authenticated %} {% if form %}
 
-
-
-    <div>
-        <div class="shadow card border-primary  mt-4 col-md-8 mx-auto">
-            <div class="card-body">
-                <form class="form-group" action="" method="post">
-
-                    {% csrf_token %} {{form|crispy}}
-                    <button class="btn btn-outline-primary btn-block" type="submit">Submit Answer</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <br> {% endif %} {% endif %}
 </div>
 
 
+{% if user.is_authenticated %} {% if form %}
+<div>
+    <div class="container">
+        <!-- Large modal -->
+        <button type="button" class="btn btn-primary btn-block mt-4 col-md-8 mx-auto" data-toggle="modal"
+            data-target=".bd-example-modal-lg">
+            Submit an Answer
+        </button>
+    </div>
+    <div class="modal fade bd-example-modal-lg mx-auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg col-md-8 mx-auto" role="document">
 
+            <!--answer form-->
+
+            <div>
+                <div class="modal-content card shadow border-primary mt-4  mx-auto">
+                    <div class="card-body">
+                        <form class="form-group" action="" method="post">
+
+                            {% csrf_token %} {{form|crispy}}
+                            <button class="btn btn-primary btn-block" type="submit">Submit Answer</button>
+                            <button type="button" class="btn btn-secondary btn-block"
+                                data-dismiss="modal">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+        </div>
+    </div>
+
+
+</div>
+{% endif %} {% endif %}
 {% endblock %}
