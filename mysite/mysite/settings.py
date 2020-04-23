@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+from .variables import config_vars
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#7kyxvlwl7i&2(q-mw6aus*bh+-%+az02v5#im^ly0^_%fcoi^'
+SECRET_KEY = config_vars.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config_vars.get("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config_vars.get("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -129,10 +129,15 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediaroot/')
 
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# DJANGO-CRISPY-FORMS CONFIGS
+# ------------------------------------------------------------------------------
+# https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# login redirects
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
-
+# test emails
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
