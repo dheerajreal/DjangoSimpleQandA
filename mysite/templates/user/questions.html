@@ -7,9 +7,13 @@
     <div class="shadow card border-primary  mt-4 col-12 col-md-10 col-lg-8  mx-auto">
         <div class="card-body">
             <h4> <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a> </h4>
-            <p>{{question.question_description|linebreaks}}</p>
-            <p class="text-muted"> asked by {{question.asked_by}}, {{question.asked_datetime|timesince}} ago </p>
-
+            <p>{{question.question_description|linebreaks|truncatewords_html:5}}</p>
+            <p class="text-muted text-right mb-0">
+                asked by
+                <a href="{% url 'user_detail' question.asked_by %}">{{question.asked_by}}</a>
+                <br>
+                {{question.asked_datetime|timesince}} ago
+            </p>
         </div>
     </div>
     {% empty %}
