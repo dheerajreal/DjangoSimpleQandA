@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="container ">
-    <div class="jumbotron bg-white py-4 mb-0 px-0 col-md-8 mx-auto">
+    <div class="jumbotron bg-white py-4 mb-0 px-0 col-12 col-md-10 col-lg-8  mx-auto">
         <div>
             <h3> {{object.question_text}} </h3>
             <p>{{object.question_description|linebreaks}}</p>
@@ -22,7 +22,7 @@
 <hr>
 <div class="container">
     {% for answer in answers %}
-    <div class="shadow card border-primary  mt-4 col-md-8 mx-auto">
+    <div class="shadow card border-primary  mt-4 col-12 col-md-10 col-lg-8  mx-auto">
         <div class="card-body">
             <p>{{answer.answer_text|linebreaks}}</p>
             <p class="text-muted text-right mb-0"> answered by
@@ -43,19 +43,19 @@
 <div>
     <div class="container">
         <!-- Large modal -->
-        <button type="button" class="btn btn-primary btn-block mt-4 col-md-8 mx-auto" data-toggle="modal"
-            data-target=".bd-example-modal-lg">
+        <button type="button" class="btn btn-primary btn-block mt-4 col-12 col-md-10 col-lg-8  mx-auto"
+            data-toggle="modal" data-target=".bd-example-modal-lg">
             Submit an Answer
         </button>
     </div>
     <div class="modal fade bd-example-modal-lg mx-auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg col-md-8 mx-auto" role="document">
+        <div class="modal-dialog modal-lg col-12 col-md-10 col-lg-8  mx-auto" role="document">
 
             <!--answer form-->
 
             <div>
-                <div class="modal-content card shadow border-primary mt-4  mx-auto">
+                <div class="modal-content  shadow border-primary mt-4  mx-auto">
                     <div class="card-body">
                         <form class="form-group" action="" method="post">
                             <h4 class="card-title">Give an Answer</h4>
