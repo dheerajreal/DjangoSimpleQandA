@@ -2,7 +2,7 @@
 
 <div class="container ">
     {% for question in object_list %}
-    <div class="card border-primary  mt-4 col-md-8 mx-auto">
+    <div class="shadow card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
 
             <h4> <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a> </h4>
