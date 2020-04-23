@@ -7,9 +7,12 @@
 
             <h4> <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a> </h4>
             <p>{{question.question_description|linebreaks}}</p>
-            <p class="text-muted"> asked by
-                <a href="{% url 'user_detail' question.asked_by %}">{{question.asked_by}}</a>,
-            </p>{{question.asked_datetime|timesince}} ago </p>
+            <p class="text-muted text-right mb-0">
+                asked by
+                <a href="{% url 'user_detail' question.asked_by %}">{{question.asked_by}}</a>
+                <br>
+                {{question.asked_datetime|timesince}} ago
+            </p>
 
         </div>
     </div>
