@@ -5,9 +5,15 @@ User = get_user_model()
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=128)
+    question_text = models.CharField(
+        max_length=128,
+        help_text="Required. 128 characters or fewer."
+    )
     question_description = models.TextField(
-        blank=True, null=True, max_length=256
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text="Optional. 256 characters or fewer."
     )
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     asked_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -24,7 +30,10 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer_text = models.TextField(max_length=256)
+    answer_text = models.TextField(
+        help_text="Required. 256 characters or fewer.",
+        max_length=256
+    )
     answer_for = models.ForeignKey(Question, on_delete=models.CASCADE)
     answered_by = models.ForeignKey(User, on_delete=models.CASCADE)
     answered_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)

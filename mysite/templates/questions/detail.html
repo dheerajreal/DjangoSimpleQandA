@@ -1,26 +1,27 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
-<div class="container">
-    <div class="jumbotron bg-white  mt-4 col-md-8 mx-auto">
+<div class="container ">
+    <div class="jumbotron bg-white py-4 mb-0 px-0 col-md-8 mx-auto">
         <div>
             <h3> {{object.question_text}} </h3>
             <p>{{object.question_description|linebreaks}}</p>
             <p class="text-muted"> asked by
                 <a href="{% url 'user_detail' object.asked_by %}">{{object.asked_by}}</a>
-                {{object.asked_datetime|timesince}} ago </p>
-            <p class="text-muted">edited {{object.edited_datetime|timesince}} ago</p>
-
-            {%  if object.asked_by == request.user %}
-            <a class=" " href="{% url 'question_edit' object.pk %}">Edit</a>
-            {% endif %}
-            <br><br>
+                {{object.asked_datetime|timesince}} ago
+                <br>
+                edited {{object.edited_datetime|timesince}} ago
+            </p>
             <p> Number of Answers: {{ answers.count }}</p>
+            {%  if object.asked_by == request.user %}
+            <a class="btn btn-secondary btn-block  mx-auto" href="{% url 'question_edit' object.pk %}">Edit
+                Question</a>
+            {% endif %}
         </div>
     </div>
 </div>
-
+<hr>
 <div class="container">
-    <hr> {% for answer in answers %}
+    {% for answer in answers %}
     <div class="shadow card border-primary  mt-4 col-md-8 mx-auto">
         <div class="card-body">
             <p>{{answer.answer_text|linebreaks}}</p>
@@ -57,7 +58,7 @@
                 <div class="modal-content card shadow border-primary mt-4  mx-auto">
                     <div class="card-body">
                         <form class="form-group" action="" method="post">
-
+                            <h4 class="card-title">Give an Answer</h4>
                             {% csrf_token %} {{form|crispy}}
                             <button class="btn btn-primary btn-block" type="submit">Submit Answer</button>
                             <button type="button" class="btn btn-secondary btn-block"
