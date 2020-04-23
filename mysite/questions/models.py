@@ -6,9 +6,12 @@ User = get_user_model()
 
 class Question(models.Model):
     question_text = models.CharField(max_length=128)
-    question_description = models.TextField(null=True, max_length=256)
+    question_description = models.TextField(
+        blank=True, null=True, max_length=256
+    )
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     asked_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)
+    edited_datetime = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
         return self.question_text
