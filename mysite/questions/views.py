@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404, render, Http404, redirect
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
+from django.shortcuts import Http404, get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import AnswerCreateForm, QuestionCreateForm, UserEditForm
@@ -120,3 +120,23 @@ def user_profile_update(request):
         "form": form,
     }
     return render(request, template_name, context)
+
+
+@login_required
+def question_like(request, pk):
+    user = request.user
+    r = {"pk": pk, "Action": None}
+    try:
+        question = Question.objects.get(pk=pk)
+    except Question.DoesNotExist:
+        r["Action"] = "404"
+        return JsonResponse(r, status=404)
+
+    if (question.likes.filter(username=user)):
+        question.likes.remove(user)
+        r["Action"] = "Like"
+        return JsonResponse(r)
+    else:
+        question.likes.add(user)
+        r["Action"] = "Unlike"
+        return JsonResponse(r)
