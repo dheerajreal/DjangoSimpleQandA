@@ -16,6 +16,21 @@
             <a class="btn btn-secondary btn-block  mx-auto" href="{% url 'question_edit' object.pk %}">Edit
                 Question</a>
             {% endif %}
+            <!--{% url 'question_like' object.pk as like_url %}-->
+            <div class=" col-12 my-0">
+                <button class="btn text-success border-success mx-auto" onclick=likeButton("{{like_url}}")
+                    id="likeButton{{object.pk}}">
+                    <span class="material-icons  ">thumb_up </span>
+                    <span class="btnTxt  mx-2"> Like </span>
+                </button>
+
+                <a class="btn  text-danger border-danger mx-auto float-right"
+                    href="{% url 'question_report' object.pk  %}">
+                    <span class="material-icons md-16">report</span>
+                    <span class=" mx-2"> Report </span>
+                </a>
+            </div>
+
         </div>
     </div>
 </div>
@@ -75,4 +90,26 @@
 
 </div>
 {% endif %} {% endif %}
+
+<script>
+    // JavaScript for like button
+    function likeButton(url) {
+
+        fetch(url)
+            .then(response => response.json(response))
+            .then(data => document.querySelector("#likeButton{{object.pk}} .btnTxt").textContent = data.Action)
+            .catch(err => console.log(err));
+        /* var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function () {
+             if (this.readyState == 4 && this.status == 200) {
+                 var btnText = document.querySelector("#likeButton{{object.pk}} .float-left");
+ 
+                 btnText.textContent = this.responseText;
+                 console.log(this.responseText);
+             }
+         };
+         xhttp.open("GET", url, true);
+         xhttp.send();*/
+    }
+</script>
 {% endblock %}
