@@ -1,9 +1,9 @@
 from django.urls import path
 
 from .views import (QuestionCreateView, QuestionListView, QuestionUpdateView,
-                    question_detail, recent_user_questions,
-                    recent_user_answers, specific_user_detail, user_profile_update
-                    )
+                    question_detail, question_like, recent_user_answers,
+                    recent_user_questions, specific_user_detail,
+                    user_profile_update)
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
@@ -12,6 +12,10 @@ urlpatterns = [
     path('q/<int:pk>/', question_detail, name="question_detail"),
     path('q/<int:pk>/edit', QuestionUpdateView.as_view(),
          name="question_edit"),
+    path('q/<int:pk>/like', question_like,
+         name="question_like"),
+
+
 
 
     path('user/<str:user_name>/questions', recent_user_questions,
