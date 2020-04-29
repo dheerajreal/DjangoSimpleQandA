@@ -14,8 +14,9 @@
                 <br>
                 Number of Answers: {{ answers.count }}</p>
 
-            <!--{% url 'question_like' object.pk as like_url %}-->
             <div class=" col-12 my-0">
+                {% if user.is_authenticated %}
+                <!--{% url 'question_like' object.pk as like_url %}-->
                 <button class="btn text-success border-success mx-auto " onclick=likeButton("{{like_url}}")
                     id="likeButton{{object.pk}}">
                     <span class="material-icons  ">thumb_up </span>
@@ -26,8 +27,8 @@
                     {% endif %}
 
                 </button>
-
-                <a class="btn  text-danger border-danger mx-auto float-right"
+                {% endif %}
+                <a class="btn  text-danger border-danger mx-auto align-right"
                     href="{% url 'question_report' object.pk  %}">
                     <span class="material-icons md-16">report</span>
                     <span class=" mx-2"> Report </span>
