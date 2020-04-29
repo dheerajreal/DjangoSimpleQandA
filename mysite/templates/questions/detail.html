@@ -7,21 +7,24 @@
             <p>{{object.question_description|linebreaks}}</p>
             <p class="text-muted"> asked by
                 <a href="{% url 'user_detail' object.asked_by %}">{{object.asked_by}}</a>
+                <br>
                 {{object.asked_datetime|timesince}} ago
                 <br>
                 edited {{object.edited_datetime|timesince}} ago
-            </p>
-            <p> Number of Answers: {{ answers.count }}</p>
-            {%  if object.asked_by == request.user %}
-            <a class="btn btn-secondary btn-block  mx-auto" href="{% url 'question_edit' object.pk %}">Edit
-                Question</a>
-            {% endif %}
+                <br>
+                Number of Answers: {{ answers.count }}</p>
+
             <!--{% url 'question_like' object.pk as like_url %}-->
             <div class=" col-12 my-0">
-                <button class="btn text-success border-success mx-auto" onclick=likeButton("{{like_url}}")
+                <button class="btn text-success border-success mx-auto " onclick=likeButton("{{like_url}}")
                     id="likeButton{{object.pk}}">
                     <span class="material-icons  ">thumb_up </span>
-                    <span class="btnTxt  mx-2"> Like </span>
+                    {% if user in object.likes.all %}
+                    <span class="btnTxt  mx-2"> You Liked </span>
+                    {% else %}
+                    <span class="btnTxt  mx-2"> {{object.likes.count }} Likes </span>
+                    {% endif %}
+
                 </button>
 
                 <a class="btn  text-danger border-danger mx-auto float-right"
@@ -31,6 +34,11 @@
                 </a>
             </div>
 
+
+            {%  if object.asked_by == request.user %}
+            <a class="btn btn-secondary btn-block  mx-auto mt-3" href="{% url 'question_edit' object.pk %}">Edit
+                Question</a>
+            {% endif %}
         </div>
     </div>
 </div>
