@@ -2,10 +2,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseForbidden, JsonResponse
-from django.shortcuts import Http404, get_object_or_404, redirect, render
+from django.shortcuts import (Http404, get_object_or_404,
+                              redirect, render, reverse)
 from django.views.generic import CreateView, ListView, UpdateView
 
-from .forms import AnswerCreateForm, QuestionCreateForm, UserEditForm
+from .forms import (AnswerCreateForm, QuestionCreateForm,
+                    QuestionReportForm, UserEditForm)
 from .models import Answer, Question
 
 User = get_user_model()
@@ -140,3 +142,20 @@ def question_like(request, pk):
         question.likes.add(user)
         r["Action"] = "Unlike"
         return JsonResponse(r)
+
+
+@login_required
+def question_report(request, pk):
+    template_name = "questions/report.html"
+    user = request.user
+    question = get_object_or_404(Question, pk=pk)
+    form = QuestionReportForm(request.POST or None)
+    if form.is_valid():
+        form.instance.question = question
+        form.instance.user = user
+        form.save()
+        return redirect(question_detail, pk=pk)
+    context = {
+        "form": form
+    }
+    return render(request, template_name, context)

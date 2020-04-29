@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (QuestionCreateView, QuestionListView, QuestionUpdateView,
                     question_detail, question_like, recent_user_answers,
                     recent_user_questions, specific_user_detail,
-                    user_profile_update)
+                    user_profile_update, question_report)
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
@@ -14,6 +14,8 @@ urlpatterns = [
          name="question_edit"),
     path('q/<int:pk>/like', question_like,
          name="question_like"),
+    path('q/<int:pk>/report', question_report,
+         name="question_report"),
 
 
 
