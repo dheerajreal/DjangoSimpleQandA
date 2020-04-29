@@ -4,6 +4,12 @@ from django.shortcuts import reverse
 User = get_user_model()
 
 
+class QuestionLikes(models.Model):
+    time = models.DateTimeField(auto_now_add=True)
+    question = models.ForeignKey("Question", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Question(models.Model):
     question_text = models.CharField(
         max_length=128,
@@ -18,6 +24,9 @@ class Question(models.Model):
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     asked_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)
     edited_datetime = models.DateTimeField(auto_now=True, auto_now_add=False)
+    likes = models.ManyToManyField(
+        User, through=QuestionLikes, related_name="likes"
+    )
 
     def __str__(self):
         return self.question_text
