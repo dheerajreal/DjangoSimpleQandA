@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import (Http404, get_object_or_404,
-                              redirect, render, reverse)
+                              redirect, render)
 from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import (AnswerCreateForm, QuestionCreateForm,

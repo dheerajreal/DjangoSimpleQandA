@@ -7,11 +7,18 @@
 
             <h4> <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a> </h4>
             <p>{{question.question_description|linebreaks|truncatewords_html:5}}</p>
-            <p class="text-muted text-right mb-0">
-                asked by
-                <a href="{% url 'user_detail' question.asked_by %}">{{question.asked_by}}</a>
-                <br>
+            <p class="text-muted float-left my-0 mr-2">{{question.answer_set.count}} Answers</p>
+
+
+            <p class="text-muted  float-right my-0 ml-2">
                 {{question.asked_datetime|timesince}} ago
+            </p>
+            <p class="text-muted float-right my-0 ml-2">
+                Asked by
+                <a href="{% url 'user_detail' question.asked_by %}">{{question.asked_by}}</a>
+            </p>
+            <p class="text-muted  float-left my-0 mr-2">
+                {{question.likes.count}} likes
             </p>
 
         </div>
