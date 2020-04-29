@@ -10,6 +10,20 @@ class QuestionLikes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
+class QuestionReport(models.Model):
+    time = models.DateTimeField(auto_now_add=True)
+    question = models.ForeignKey("Question", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    report_description = models.TextField(
+        "Report if you think this question is abusing our service.",
+        max_length=256,
+        help_text="Required. 256 characters or fewer."
+    )
+
+    def __str__(self):
+        return f"{self.user}  Reported {self.question}"
+
+
 class Question(models.Model):
     question_text = models.CharField(
         max_length=128,
