@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "accounts",
     "questions",
 
-    "crispy_forms"
+    "crispy_forms",
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
