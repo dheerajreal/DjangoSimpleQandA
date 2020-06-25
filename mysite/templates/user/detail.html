@@ -12,6 +12,15 @@
             <h4 class="text-muted">{{ user.get_full_name }}</h4>
             <h4 class="text-muted">Member since : {{ user.date_joined }}</h4>
             <br>
+
+
+            <a class="btn btn-outline-primary btn-block" href="{% url 'user_questions_list' user.username  %}">
+                Recent Questions by user
+            </a>
+            <a class="btn btn-outline-primary btn-block" href="{% url 'user_answers_list' user.username  %}">
+                Recent Answers by user
+            </a>
+            <br>
             {% ifequal user.username request.user.username %}
             <a class="btn btn-secondary btn-block" href="{% url 'user_profile_update' %}">
                 Edit Profile
@@ -25,13 +34,6 @@
 
             {% endifequal %}
             <br>
-
-            <a class="btn btn-outline-primary btn-block" href="{% url 'user_questions_list' user.username  %}">
-                Recent Questions by user
-            </a>
-            <a class="btn btn-outline-primary btn-block" href="{% url 'user_answers_list' user.username  %}">
-                Recent Answers by user
-            </a>
         </div>
     </div>
 
