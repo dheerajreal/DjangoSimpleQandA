@@ -103,11 +103,13 @@
 <script>
     // JavaScript for like button
     function likeButton(url) {
-
+        document.querySelector("#likeButton{{object.pk}} ").setAttribute("disabled", "disabled");
         fetch(url)
             .then(response => response.json(response))
             .then(data => document.querySelector("#likeButton{{object.pk}} .btnTxt").textContent = data.Action)
+            .then(document.querySelector("#likeButton{{object.pk}} ").removeAttribute("disabled"))
             .catch(err => console.log(err));
+
         /* var xhttp = new XMLHttpRequest();
          xhttp.onreadystatechange = function () {
              if (this.readyState == 4 && this.status == 200) {
