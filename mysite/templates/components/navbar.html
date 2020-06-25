@@ -1,8 +1,15 @@
 <!-- Navigation -->
 <nav class="navbar shadow mb-4 navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">
-            Sawaal
+
+
+        <a class="navbar-brand " href="{% url 'index' %}">
+            <i class="gg-album text-white float-left"></i>
+
+        </a>
+        <a class="navbar-brand " href="{% url 'index' %}">
+            <b class="text-white">Sawaal</b>
+
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,19 +19,33 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'question_create' %}">Ask a Question</a>
+
+                    <a class="nav-link text-white" href="{% url 'question_create' %}">
+                        <i class="gg-add-r float-left"></i>
+                        <span class="ml-2">Ask a Question</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'user_detail' request.user.username %}"> Profile</a>
+                    <a class="nav-link text-white" href="{% url 'user_detail' request.user.username %}">
+                        <i class="gg-profile float-left"></i>
+                        <span class="ml-2"> Profile</span>
+                    </a>
                 </li>
 
                 {% else %}
 
                 <li class="nav-item  ">
-                    <a class="nav-link text-white" href="{% url 'signup' %}">Signup</a>
+                    <a class="nav-link text-white" href="{% url 'signup' %}">
+                        <i class="gg-user-add float-left"></i>
+                        <span class="ml-2"> Signup</span>
+                    </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link text-white" href="{% url 'login' %}">
+                        <i class="gg-user float-left"></i>
+                        <span class="ml-2"> Login</span>
+                    </a>
                 </li>
                 {% endif %}
 
