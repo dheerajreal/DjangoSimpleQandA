@@ -24,3 +24,15 @@ class UserEmailEdit(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("user_detail", args=[self.request.user.username])
+
+
+class UserProfileUpdate(generic.UpdateView):
+    model = User
+    template_name = 'accounts/edit.html'
+    fields = ["username", "first_name", "last_name", ]
+
+    def get_object(self):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse_lazy("user_detail", args=[self.request.user.username])
