@@ -1,6 +1,19 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="container ">
+
+
+    <div class="   mt-4 col-12 col-md-10 col-lg-8  mx-auto">
+        <div class="card-body">
+            Sorted by :
+            <a href="{% url "index" %}">Most Recent</a> |
+            <a href="{% url "sort_by_ans_count" %}">Most Answered</a> |
+            <a href="{% url "sort_by_likes_count" %}">Most Liked </a>
+
+        </div>
+    </div>
+
+
     {% for question in object_list %}
     <div class="shadow card border-primary  mt-4 col-12 col-md-10 col-lg-8  mx-auto">
         <div class="card-body">

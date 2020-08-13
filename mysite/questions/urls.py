@@ -1,9 +1,11 @@
 from django.urls import path
 
-from .views import (QuestionCreateView, QuestionListView, QuestionUpdateView,
-                    question_detail, question_like, recent_user_answers,
+from .views import (QuestionCreateView, QuestionListByAnswerCount,
+                    QuestionListByLikesCount, QuestionListView,
+                    QuestionUpdateView, question_detail, question_like,
+                    question_report, recent_user_answers,
                     recent_user_questions, specific_user_detail,
-                    user_profile_update, question_report)
+                    user_profile_update)
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
@@ -26,4 +28,11 @@ urlpatterns = [
          name="user_answers_list"),
     path('user/<str:user_name>/', specific_user_detail,
          name="user_detail"),
+
+
+
+    path('most/answered', QuestionListByAnswerCount.as_view(),
+         name="sort_by_ans_count"),
+    path('most/liked', QuestionListByLikesCount.as_view(),
+         name="sort_by_likes_count"),
 ]
