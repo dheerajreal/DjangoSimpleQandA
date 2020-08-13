@@ -1,19 +1,13 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="container">
-    <div class="shadow card border-primary  mt-4 col-12 col-md-10 col-lg-8  mx-auto">
+    <div class="shadow card border-primary mt-4 col-12 col-md-10 col-lg-8 mx-auto">
         <div class="card-body">
             <h4 class="card-title">Logged out</h4>
 
-
             <a class="btn btn-primary" href="{% url 'login' %}">login again</a>
-
-
         </div>
     </div>
 </div>
-
-
-
 
 {% endblock %}
