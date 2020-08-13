@@ -4,7 +4,7 @@ from .views import (QuestionCreateView, QuestionListByAnswerCount,
                     QuestionListByLikesCount, QuestionListView,
                     QuestionUpdateView, question_detail, question_like,
                     question_report, recent_user_answers,
-                    recent_user_questions, specific_user_detail,)
+                    recent_user_questions, specific_user_detail)
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),

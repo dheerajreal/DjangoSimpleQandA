@@ -1,6 +1,7 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.shortcuts import reverse
+
 User = get_user_model()
 
 
@@ -33,7 +34,11 @@ class Question(models.Model):
         blank=True,
         null=True,
         max_length=256,
-        help_text="Describe your question and provide extra details if necessary. Optional. 256 characters or fewer."
+        help_text="""
+            Describe your question and provide extra details if necessary.
+            Optional.
+            256 characters or fewer.
+        """
     )
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     asked_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)

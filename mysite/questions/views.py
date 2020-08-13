@@ -6,8 +6,7 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import Http404, get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView, UpdateView
 
-from .forms import (AnswerCreateForm, QuestionCreateForm, QuestionReportForm,
-                    UserEditForm)
+from .forms import AnswerCreateForm, QuestionCreateForm, QuestionReportForm
 from .models import Answer, Question
 
 User = get_user_model()
