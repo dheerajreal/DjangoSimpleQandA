@@ -66,7 +66,7 @@ def question_detail(request, pk):
     question = get_object_or_404(Question, pk=pk)
     answers = Answer.objects.filter(answer_for=question)
     form = AnswerCreateForm(request.POST or None)
-    if form.is_valid():
+    if form.is_valid() and request.user.is_authenticated:
         form.instance.answer_for = question
         form.instance.answered_by = request.user
         form.save()
