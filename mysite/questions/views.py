@@ -124,24 +124,6 @@ def specific_user_detail(request, user_name):
 
 
 @login_required
-def user_profile_update(request):
-    template_name = "accounts/edit.html"
-    try:
-        user = User.objects.get(username=request.user)
-    except User.DoesNotExist:
-        raise Http404
-    form = UserEditForm(request.POST or None, instance=user)
-    if form.is_valid():
-        form.save()
-        return redirect("user_detail", user.username)
-    context = {
-        "user": user,
-        "form": form,
-    }
-    return render(request, template_name, context)
-
-
-@login_required
 def question_like(request, pk):
     user = request.user
     r = {"pk": pk, "Action": None}
