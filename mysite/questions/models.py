@@ -27,13 +27,13 @@ class QuestionReport(models.Model):
 class Question(models.Model):
     question_text = models.CharField(
         max_length=128,
-        help_text="Required. 128 characters or fewer."
+        help_text="This is your question. Required. 128 characters or fewer."
     )
     question_description = models.TextField(
         blank=True,
         null=True,
         max_length=256,
-        help_text="Optional. 256 characters or fewer."
+        help_text="Describe your question and provide extra details if necessary. Optional. 256 characters or fewer."
     )
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     asked_datetime = models.DateTimeField(auto_now=False, auto_now_add=True)
