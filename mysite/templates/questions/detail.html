@@ -1,137 +1,139 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
-<div class="container ">
-    <div class="jumbotron bg-white py-4 mb-0 px-0 col-12 col-md-10 col-lg-8  mx-auto">
+<div class="container">
+    <div class="jumbotron bg-white py-4 mb-0 px-0 col-12 col-md-10 col-lg-8 mx-auto">
         <div>
+            {% if object.asked_by == request.user %}
 
-            {%  if object.asked_by == request.user %}
-
-
-            <a class="btn  text-secondary mx-auto float-right" href="{% url 'question_edit' object.pk %}">
+            <a class="btn text-secondary mx-auto float-right" href="{% url 'question_edit' object.pk %}">
                 <span class="material-icons">edit</span>
             </a>
 
-
             {% else %}
 
-
-            <a class="btn  text-danger mx-auto float-right" href="{% url 'question_report' object.pk  %}">
+            <a class="btn text-danger mx-auto float-right" href="{% url 'question_report' object.pk  %}">
                 <span class="material-icons md-16">report</span>
             </a>
 
-
             {% endif %}
 
-
-            <h3> {{object.question_text}} </h3>
+            <h3>{{object.question_text}}</h3>
             <p>{{object.question_description|linebreaks}}</p>
-            <p class="text-muted"> asked by
+            <p class="text-muted">
+                asked by
                 <a href="{% url 'user_detail' object.asked_by %}">{{object.asked_by}}</a>
-                <br>
+                <br />
                 {{object.asked_datetime|timesince}} ago
-                <br>
+                <br />
                 edited {{object.edited_datetime|timesince}} ago
-                <br>
-                Number of Answers: {{ answers.count }}</p>
+                <br />
+                Number of Answers: {{ answers.count }}
+            </p>
 
-            <div class=" col-12 my-0">
+            <div class="col-12 my-0">
                 {% if user.is_authenticated %}
                 <!--{% url 'question_like' object.pk as like_url %}-->
-                <button class="btn text-success border-success mx-auto " onclick=likeButton("{{like_url}}")
+                <button class="btn text-success border-success mx-auto" onclick=likeButton("{{like_url}}")
                     id="likeButton{{object.pk}}">
-                    <span class="material-icons  ">thumb_up </span>
+                    <span class="material-icons">thumb_up </span>
                     {% if user in object.likes.all %}
-                    <span class="btnTxt  mx-2"> You Liked </span>
+                    <span class="btnTxt mx-2"> You Liked </span>
                     {% else %}
-                    <span class="btnTxt  mx-2"> {{object.likes.count }} Likes </span>
+                    <span class="btnTxt mx-2"> {{object.likes.count }} Likes </span>
                     {% endif %}
-
                 </button>
                 {% endif %}
-
             </div>
-
         </div>
     </div>
 </div>
-<hr>
+<hr />
 <div class="container">
     {% for answer in answers %}
-    <div class="shadow card border-primary  mt-4 col-12 col-md-10 col-lg-8  mx-auto">
+    <div class="shadow card border-primary mt-4 col-12 col-md-10 col-lg-8 mx-auto">
         <div class="card-body">
             <p>{{answer.answer_text|linebreaks}}</p>
-            <p class="text-muted text-right mb-0"> answered by
+            <p class="text-muted text-right mb-0">
+                answered by
                 <a href="{% url 'user_detail' answer.answered_by %}">
                     {{answer.answered_by}}
-                </a> <br>
-                {{answer.answered_datetime|timesince}} ago </p>
+                </a>
+                <br />
+                {{answer.answered_datetime|timesince}} ago
+            </p>
         </div>
     </div>
     {% endfor %}
-
-
-
 </div>
-
 
 {% if user.is_authenticated %} {% if form %}
 <div>
     <div class="container">
         <!-- Large modal -->
-        <button type="button" class="btn btn-primary btn-block mt-4 col-12 col-md-10 col-lg-8  mx-auto"
+        <button type="button" class="btn btn-primary btn-block mt-4 col-12 col-md-10 col-lg-8 mx-auto"
             data-toggle="modal" data-target=".bd-example-modal-lg">
             Submit an Answer
         </button>
     </div>
     <div class="modal fade bd-example-modal-lg mx-auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg col-12 col-md-10 col-lg-8  mx-auto" role="document">
-
+        <div class="modal-dialog modal-lg col-12 col-md-10 col-lg-8 mx-auto" role="document">
             <!--answer form-->
 
             <div>
-                <div class="modal-content  shadow border-primary mt-4  mx-auto">
+                <div class="modal-content shadow border-primary mt-4 mx-auto">
                     <div class="card-body">
                         <form class="form-group" action="" method="post">
                             <h4 class="card-title">Give an Answer</h4>
                             {% csrf_token %} {{form|crispy}}
-                            <button class="btn btn-primary btn-block" type="submit">Submit Answer</button>
-                            <button type="button" class="btn btn-secondary btn-block"
-                                data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary btn-block" type="submit">
+                                Submit Answer
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">
+                                Cancel
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
-            <br>
-
+            <br />
         </div>
     </div>
-
-
 </div>
 {% endif %} {% endif %}
 
 <script>
     // JavaScript for like button
     function likeButton(url) {
-        document.querySelector("#likeButton{{object.pk}} ").setAttribute("disabled", "disabled");
+        document
+            .querySelector("#likeButton{{object.pk}} ")
+            .setAttribute("disabled", "disabled");
         fetch(url)
-            .then(response => response.json(response))
-            .then(data => document.querySelector("#likeButton{{object.pk}} .btnTxt").textContent = data.Action)
-            .then(document.querySelector("#likeButton{{object.pk}} ").removeAttribute("disabled"))
-            .catch(err => console.log(err));
+            .then((response) => response.json(response))
+            .then(
+                (data) =>
+                    (document.querySelector(
+                        "#likeButton{{object.pk}} .btnTxt"
+                    ).textContent = data.Action)
+            )
+            .then(
+                document
+                    .querySelector("#likeButton{{object.pk}} ")
+                    .removeAttribute("disabled")
+            )
+            .catch((err) => console.log(err));
 
         /* var xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function () {
-             if (this.readyState == 4 && this.status == 200) {
-                 var btnText = document.querySelector("#likeButton{{object.pk}} .float-left");
- 
-                 btnText.textContent = this.responseText;
-                 console.log(this.responseText);
-             }
-         };
-         xhttp.open("GET", url, true);
-         xhttp.send();*/
+             xhttp.onreadystatechange = function () {
+                 if (this.readyState == 4 && this.status == 200) {
+                     var btnText = document.querySelector("#likeButton{{object.pk}} .float-left");
+     
+                     btnText.textContent = this.responseText;
+                     console.log(this.responseText);
+                 }
+             };
+             xhttp.open("GET", url, true);
+             xhttp.send();*/
     }
 </script>
 {% endblock %}
