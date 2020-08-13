@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -8,7 +8,9 @@
 
     <body>
         {% include "components/navbar.html" %} {% block content %} {% endblock %}
-        <div class="container col-12 col-md-10 col-lg-8  mx-auto">{% include "components/pagination.html" %}</div>
+        <div class="container col-12 col-md-10 col-lg-8 mx-auto">
+            {% include "components/pagination.html" %}
+        </div>
         {% include "components/javascript.html" %}
     </body>
 

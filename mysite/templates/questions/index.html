@@ -1,45 +1,41 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
-<div class="container ">
-
-
-    <div class="   mt-4 col-12 col-md-10 col-lg-8  mx-auto">
+<div class="container">
+    <div class="mt-4 col-12 col-md-10 col-lg-8 mx-auto">
         <div class="card-body text-center">
             Sorted by :
             <a href="{% url 'index' %}">Most Recent</a> |
             <a href="{% url 'sort_by_ans_count' %}">Most Answered</a> |
             <a href="{% url 'sort_by_likes_count' %}">Most Liked </a>
-
         </div>
     </div>
 
-
     {% for question in object_list %}
-    <div class="shadow card border-primary  mt-4 col-12 col-md-10 col-lg-8  mx-auto">
+    <div class="shadow card border-primary mt-4 col-12 col-md-10 col-lg-8 mx-auto">
         <div class="card-body">
-
-            <h4> <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a> </h4>
+            <h4>
+                <a href="{% url 'question_detail' question.pk %}">{{question.question_text}}</a>
+            </h4>
             <p>{{question.question_description|linebreaks|truncatewords_html:5}}</p>
-            <p class="text-muted float-left my-0 mr-2">{{question.answer_set.count}} Answers</p>
+            <p class="text-muted float-left my-0 mr-2">
+                {{question.answer_set.count}} Answers
+            </p>
 
-
-            <p class="text-muted  float-right my-0 ml-2">
+            <p class="text-muted float-right my-0 ml-2">
                 {{question.asked_datetime|timesince}} ago
             </p>
             <p class="text-muted float-right my-0 ml-2">
                 Asked by
                 <a href="{% url 'user_detail' question.asked_by %}">{{question.asked_by}}</a>
             </p>
-            <p class="text-muted  float-left my-0 mr-2">
+            <p class="text-muted float-left my-0 mr-2">
                 {{question.likes.count}} likes
             </p>
-
         </div>
     </div>
     {% empty %}
     <p>Nothing Here</p>
     {% endfor %}
 </div>
-
 
 {% endblock %}

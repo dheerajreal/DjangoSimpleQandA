@@ -1,15 +1,11 @@
 <!-- Navigation -->
 <nav class="navbar shadow mb-4 navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-
-
-        <a class="navbar-brand " href="{% url 'index' %}">
+        <a class="navbar-brand" href="{% url 'index' %}">
             <i class="gg-album text-white float-left"></i>
-
         </a>
-        <a class="navbar-brand " href="{% url 'index' %}">
+        <a class="navbar-brand" href="{% url 'index' %}">
             <b class="text-white">Sawaal</b>
-
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +15,6 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-
                     <a class="nav-link text-white" href="{% url 'question_create' %}">
                         <i class="gg-add-r float-left"></i>
                         <span class="ml-2">Ask a Question</span>
@@ -34,7 +29,7 @@
 
                 {% else %}
 
-                <li class="nav-item  ">
+                <li class="nav-item">
                     <a class="nav-link text-white" href="{% url 'signup' %}">
                         <i class="gg-user-add float-left"></i>
                         <span class="ml-2"> Signup</span>
@@ -48,8 +43,6 @@
                     </a>
                 </li>
                 {% endif %}
-
-
             </ul>
         </div>
     </div>
