@@ -50,7 +50,6 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Question
     template_name = "questions/update.html"
     fields = ["question_text", "question_description"]
-    success_url = "/"
 
     def test_func(self):
         return self.request.user == self.get_object().asked_by
