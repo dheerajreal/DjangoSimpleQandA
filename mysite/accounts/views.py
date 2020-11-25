@@ -25,7 +25,7 @@ class UserEmailEdit(LoginRequiredMixin, generic.UpdateView):
         return reverse_lazy("user_detail", args=[self.request.user.username])
 
 
-class UserProfileUpdate(generic.UpdateView):
+class UserProfileUpdate(LoginRequiredMixin, generic.UpdateView):
     model = User
     template_name = 'accounts/edit.html'
     fields = ["username", "first_name", "last_name", ]

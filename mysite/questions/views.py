@@ -78,6 +78,7 @@ def question_detail(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
 def recent_user_questions(request, user_name):
     template_name = "user/questions.html"
     try:
@@ -92,6 +93,7 @@ def recent_user_questions(request, user_name):
     return render(request, template_name, context)
 
 
+@login_required
 def recent_user_answers(request, user_name):
     template_name = "user/answers.html"
     try:
