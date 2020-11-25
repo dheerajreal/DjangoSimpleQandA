@@ -101,14 +101,20 @@
     </div>
 </div>
 {% endif %} {% endif %}
+{% csrf_token %}
 
 <script>
     // JavaScript for like button
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     function likeButton(url) {
         document
             .querySelector("#likeButton{{object.pk}} ")
             .setAttribute("disabled", "disabled");
-        fetch(url)
+        fetch(url, {
+            headers: { 'X-CSRFToken': csrftoken },
+            method: "POST",
+            mode: 'same-origin',
+        })
             .then((response) => response.json(response))
             .then(
                 (data) =>
@@ -123,8 +129,9 @@
             )
             .catch((err) => console.log(err));
 
-        /* var xhttp = new XMLHttpRequest();
-             xhttp.onreadystatechange = function () {
+        /*  var xhttp = new XMLHttpRequest();
+            xhttp.setRequestHeader("X-CSRFToken", csrftoken);
+            xhttp.onreadystatechange = function () {
                  if (this.readyState == 4 && this.status == 200) {
                      var btnText = document.querySelector("#likeButton{{object.pk}} .float-left");
      
@@ -132,7 +139,7 @@
                      console.log(this.responseText);
                  }
              };
-             xhttp.open("GET", url, true);
+             xhttp.open("POST", url, true);
              xhttp.send();*/
     }
 </script>
