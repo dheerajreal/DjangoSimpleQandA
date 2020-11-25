@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-from .variables import config_vars
+import dj_database_url
+from decouple import Csv, config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,13 +22,31 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
+
+# some deployment options
+DEBUG = config('DEBUG', default=False, cast=bool)
+TEMPLATE_DEBUG = DEBUG
+SECRET_KEY = config('SECRET_KEY', default="whatever_secret_key_for_prod")
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default="127.0.0.1, localhost",
+    cast=Csv()
+)
+
+
+# for https during deployment
+HTTPS = config('HTTPS', default=False, cast=bool)
+
+if HTTPS:
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config_vars.get("SECRET_KEY")
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config_vars.get("DEBUG")
-
-ALLOWED_HOSTS = config_vars.get("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -144,3 +163,10 @@ LOGOUT_REDIRECT_URL = 'index'
 # test emails
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+
+if not DEBUG:
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    db_from_env = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+    DATABASES['default'].update(db_from_env)
