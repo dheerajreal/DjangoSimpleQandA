@@ -126,22 +126,26 @@ def specific_user_detail(request, user_name):
 
 @login_required
 def question_like(request, pk):
-    user = request.user
-    r = {"pk": pk, "Action": None}
-    try:
-        question = Question.objects.get(pk=pk)
-    except Question.DoesNotExist:
-        r["Action"] = "404"
-        return JsonResponse(r, status=404)
+    if request.method == 'POST':
 
-    if (question.likes.filter(username=user)):
-        question.likes.remove(user)
-        r["Action"] = "Like"
-        return JsonResponse(r)
+        user = request.user
+        r = {"pk": pk, "Action": None}
+        try:
+            question = Question.objects.get(pk=pk)
+        except Question.DoesNotExist:
+            r["Action"] = "404"
+            return JsonResponse(r, status=404)
+
+        if (question.likes.filter(username=user)):
+            question.likes.remove(user)
+            r["Action"] = "Like"
+            return JsonResponse(r)
+        else:
+            question.likes.add(user)
+            r["Action"] = "Unlike"
+            return JsonResponse(r)
     else:
-        question.likes.add(user)
-        r["Action"] = "Unlike"
-        return JsonResponse(r)
+        return HttpResponseForbidden("Not allowed")
 
 
 @login_required
