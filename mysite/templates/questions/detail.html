@@ -1,11 +1,12 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="container">
-    <div class="jumbotron bg-white py-4 mb-0 px-0 col-12 col-md-10 col-lg-8 mx-auto">
+    <div class="    py-4 mb-0 px-0 col-12 col-md-10 col-lg-8 mx-auto">
+
         <div>
             {% if object.asked_by == request.user %}
 
-            <a class="btn text-secondary mx-auto float-right" href="{% url 'question_edit' object.pk %}">
+            <a class="btn text-primary mx-auto float-right" href="{% url 'question_edit' object.pk %}">
                 <span class="material-icons">edit</span>
             </a>
 
@@ -118,9 +119,9 @@
             .then((response) => response.json(response))
             .then(
                 (data) =>
-                    (document.querySelector(
-                        "#likeButton{{object.pk}} .btnTxt"
-                    ).textContent = data.Action)
+                (document.querySelector(
+                    "#likeButton{{object.pk}} .btnTxt"
+                ).textContent = data.Action)
             )
             .then(
                 document
