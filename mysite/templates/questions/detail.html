@@ -34,7 +34,7 @@
             <div class="col-12 my-0">
                 {% if user.is_authenticated %}
                 <!--{% url 'question_like' object.pk as like_url %}-->
-                <button class="btn text-success border-success mx-auto" onclick=likeButton("{{like_url}}")
+                <button class="btn text-success border-success mx-auto" onclick=likeButton()
                     id="likeButton{{object.pk}}">
                     <span class="material-icons">thumb_up </span>
                     {% if user in object.likes.all %}
@@ -118,7 +118,8 @@
 <script>
     // JavaScript for like button
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    function likeButton(url) {
+    function likeButton() {
+        const url = `{{like_url}}`
         document
             .querySelector("#likeButton{{object.pk}} ")
             .setAttribute("disabled", "disabled");
