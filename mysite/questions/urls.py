@@ -8,6 +8,7 @@ from .views import (
     QuestionListByLikesCount,
     QuestionListView,
     QuestionUpdateView,
+    UnansweredQuestionListView,
     question_detail,
     question_like,
     question_report,
@@ -47,4 +48,6 @@ urlpatterns = [
          name="asked_by_user"),
     path('q/liked', LikedQuestionListView.as_view(),
          name="liked_questions_list"),
+    path('q/unanswered', UnansweredQuestionListView.as_view(),
+         name="unanswered_questions_list"),
 ]
