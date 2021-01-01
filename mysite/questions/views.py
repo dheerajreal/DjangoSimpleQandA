@@ -5,7 +5,7 @@ from django.db.models import Count
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import Http404, get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView, UpdateView
-
+from django.conf import settings
 from .forms import AnswerCreateForm, QuestionCreateForm, QuestionReportForm
 from .models import Answer, Question
 
@@ -15,7 +15,7 @@ User = get_user_model()
 class QuestionListView(ListView):
     template_name = "questions/index.html"
     model = Question
-    paginate_by = 5
+    paginate_by = settings.PAGINATE_BY
 
 
 class QuestionListByAnswerCount(ListView):
@@ -24,7 +24,7 @@ class QuestionListByAnswerCount(ListView):
         ans_count=Count('answer')
     ).order_by("-ans_count")
 
-    paginate_by = 5
+    paginate_by = settings.PAGINATE_BY
 
 
 class QuestionListByLikesCount(ListView):
@@ -33,7 +33,7 @@ class QuestionListByLikesCount(ListView):
         like_count=Count('likes')
     ).order_by("-like_count")
 
-    paginate_by = 5
+    paginate_by = settings.PAGINATE_BY
 
 
 class QuestionCreateView(LoginRequiredMixin, CreateView):
