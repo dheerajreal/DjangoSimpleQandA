@@ -10,6 +10,11 @@
             <h1 class=> {{ user.username }}</h1>
             <br />
             <h4 class="text-muted">{{ user.get_full_name }}</h4>
+            <br />
+            <h4 class="text-muted"> {{ user.question_set.count}} Questions asked</h4>
+            <br />
+            <h4 class="text-muted"> {{ user.answer_set.count}} Answers given</h4>
+            <br />
             <h4 class="text-muted">Member since : <br /> {{ user.date_joined |date:"M d, Y"}}</h4>
             <br />
 
