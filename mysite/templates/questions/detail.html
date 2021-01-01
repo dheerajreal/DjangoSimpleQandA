@@ -101,7 +101,18 @@
         </div>
     </div>
 </div>
-{% endif %} {% endif %}
+
+{% endif %}
+{% else %}
+<div>
+    <div class="container">
+
+        <a href="{% url 'login' %}" class="btn btn-primary btn-block mt-4 col-12 col-md-10 col-lg-8 mx-auto">
+            Login and add an Answer
+        </a>
+    </div>
+</div>
+{% endif %}
 {% csrf_token %}
 
 <script>
