@@ -44,6 +44,14 @@ class AskedQuestionListView(LoginRequiredMixin, ListView):
         return Question.objects.filter(asked_by=self.request.user)
 
 
+class LikedQuestionListView(LoginRequiredMixin, ListView):
+    template_name = "questions/index.html"
+    paginate_by = settings.PAGINATE_BY
+
+    def get_queryset(self):
+        return Question.objects.filter(likes=self.request.user)
+
+
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     form_class = QuestionCreateForm
     template_name = 'questions/create.html'

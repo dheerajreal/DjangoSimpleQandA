@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     AskedQuestionListView,
+    LikedQuestionListView,
     QuestionCreateView,
     QuestionListByAnswerCount,
     QuestionListByLikesCount,
@@ -44,5 +45,6 @@ urlpatterns = [
          name="sort_by_likes_count"),
     path('q/asked', AskedQuestionListView.as_view(),
          name="asked_by_user"),
-   
+    path('q/liked', LikedQuestionListView.as_view(),
+         name="liked_questions_list"),
 ]
