@@ -19,7 +19,7 @@ from .views import (
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
-    path('create/', QuestionCreateView.as_view(), name="question_create"),
+    path('q/create/', QuestionCreateView.as_view(), name="question_create"),
     path('q/<int:pk>/', question_detail, name="question_detail"),
     path('q/<int:pk>/edit', QuestionUpdateView.as_view(),
          name="question_edit"),
@@ -40,14 +40,14 @@ urlpatterns = [
 
 
 
-    path('most/answered', QuestionListByAnswerCount.as_view(),
+    path('view/mostanswered', QuestionListByAnswerCount.as_view(),
          name="sort_by_ans_count"),
-    path('most/liked', QuestionListByLikesCount.as_view(),
+    path('view/mostliked', QuestionListByLikesCount.as_view(),
          name="sort_by_likes_count"),
-    path('q/asked', AskedQuestionListView.as_view(),
+    path('view/asked', AskedQuestionListView.as_view(),
          name="asked_by_user"),
-    path('q/liked', LikedQuestionListView.as_view(),
+    path('view/liked', LikedQuestionListView.as_view(),
          name="liked_questions_list"),
-    path('q/unanswered', UnansweredQuestionListView.as_view(),
+    path('view/unanswered', UnansweredQuestionListView.as_view(),
          name="unanswered_questions_list"),
 ]
