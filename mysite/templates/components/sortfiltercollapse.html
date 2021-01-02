@@ -1,0 +1,28 @@
+<div class="mt-4 col-12 col-md-10 col-lg-8 mx-auto">
+    <div class="row">
+        <button class="btn   " type="button" data-toggle="collapse" data-target="#collapseSortAndFilter"
+            aria-expanded="false" aria-controls="collapseSortAndFilter">
+            <i class="gg-select-o"></i>
+        </button>
+
+    </div>
+    <div class="collapse" id="collapseSortAndFilter">
+        <div class="card-body text-center row">
+            <i class="mx-auto">Sort by :</i>
+            <a class="mx-auto" href="{% url 'index' %}">Most Recent</a> |
+            <a class="mx-auto" href="{% url 'sort_by_ans_count' %}">Most Answered</a> |
+            <a class="mx-auto" href="{% url 'sort_by_likes_count' %}">Most Liked </a>
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="card-body text-center row">
+            <i class="mx-auto">Filter by :</i>
+
+            <a class="mx-auto" href="{% url 'asked_by_user' %}">My Questions </a>|
+            <a class="mx-auto" href="{% url 'liked_questions_list' %}">Liked by me </a>|
+            <a class="mx-auto" href="{% url 'unanswered_questions_list' %}">Unanswered </a>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
