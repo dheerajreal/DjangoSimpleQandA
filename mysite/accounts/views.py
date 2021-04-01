@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -35,3 +36,9 @@ class UserProfileUpdate(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("user_detail", args=[self.request.user.username])
+
+
+def dark_mode_toggle(request):
+    current = request.session.get("darkmode", "")
+    request.session["darkmode"] = not current
+    return HttpResponse(current)
