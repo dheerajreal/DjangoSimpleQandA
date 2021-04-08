@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+<div class="container">
+    <div class="shadow card border-primary mt-4 col-12 col-md-10 col-lg-8 mx-auto">
+        <div class="card-body">
+            <h4 class="card-title col-10 mx-auto">Oops, There was an Error </h4>
+            <h5 class="col-10 mx-auto">
+                {% block errormessage %}
+                There was an Error
+                {% endblock errormessage %}
+            </h5>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
