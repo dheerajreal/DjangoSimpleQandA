@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import Http404, get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView, UpdateView
@@ -17,13 +17,30 @@ class QuestionListView(ListView):
     template_name = "questions/index.html"
     model = Question
     paginate_by = settings.PAGINATE_BY
+    queryset = Question.objects.all().select_related(
+        "asked_by",
+    ).prefetch_related(
+        "likes"
+    ).prefetch_related(
+        Prefetch(
+            'answer_set'
+        )
+    )
 
 
 class QuestionListByAnswerCount(ListView):
     template_name = "questions/index.html"
     queryset = Question.objects.annotate(
         ans_count=Count('answer')
-    ).order_by("-ans_count")
+    ).order_by("-ans_count").select_related(
+        "asked_by",
+    ).prefetch_related(
+        "likes"
+    ).prefetch_related(
+        Prefetch(
+            'answer_set'
+        )
+    )
 
     paginate_by = settings.PAGINATE_BY
 
@@ -32,7 +49,15 @@ class QuestionListByLikesCount(ListView):
     template_name = "questions/index.html"
     queryset = Question.objects.annotate(
         like_count=Count('likes')
-    ).order_by("-like_count")
+    ).order_by("-like_count").select_related(
+        "asked_by",
+    ).prefetch_related(
+        "likes"
+    ).prefetch_related(
+        Prefetch(
+            'answer_set'
+        )
+    )
 
     paginate_by = settings.PAGINATE_BY
 
@@ -42,7 +67,17 @@ class AskedQuestionListView(LoginRequiredMixin, ListView):
     paginate_by = settings.PAGINATE_BY
 
     def get_queryset(self):
-        return Question.objects.filter(asked_by=self.request.user)
+        return Question.objects.filter(
+            asked_by=self.request.user
+        ).select_related(
+            "asked_by",
+        ).prefetch_related(
+            "likes"
+        ).prefetch_related(
+            Prefetch(
+                'answer_set'
+            )
+        )
 
 
 class LikedQuestionListView(LoginRequiredMixin, ListView):
@@ -50,7 +85,17 @@ class LikedQuestionListView(LoginRequiredMixin, ListView):
     paginate_by = settings.PAGINATE_BY
 
     def get_queryset(self):
-        return Question.objects.filter(likes=self.request.user)
+        return Question.objects.filter(
+            likes=self.request.user
+        ).select_related(
+            "asked_by",
+        ).prefetch_related(
+            "likes"
+        ).prefetch_related(
+            Prefetch(
+                'answer_set'
+            )
+        )
 
 
 class UnansweredQuestionListView(LoginRequiredMixin, ListView):
@@ -58,7 +103,17 @@ class UnansweredQuestionListView(LoginRequiredMixin, ListView):
     paginate_by = settings.PAGINATE_BY
 
     def get_queryset(self):
-        return Question.objects.filter(answer=None)
+        return Question.objects.filter(
+            answer=None
+        ).select_related(
+            "asked_by",
+        ).prefetch_related(
+            "likes"
+        ).prefetch_related(
+            Prefetch(
+                'answer_set'
+            )
+        )
 
 
 class QuestionCreateView(LoginRequiredMixin, CreateView):
@@ -88,7 +143,9 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 def question_detail(request, pk):
     template_name = "questions/detail.html"
     question = get_object_or_404(Question, pk=pk)
-    answers = Answer.objects.filter(answer_for=question)
+    answers = Answer.objects.filter(answer_for=question).select_related(
+        # "answered_by",
+    )
     form = AnswerCreateForm(request.POST or None)
     if form.is_valid() and request.user.is_authenticated:
         form.instance.answer_for = question
@@ -110,7 +167,11 @@ def recent_user_questions(request, user_name):
         user = User.objects.get(username=user_name)
     except User.DoesNotExist:
         raise Http404
-    queryset = Question.objects.filter(asked_by=user)[:5]
+    queryset = Question.objects.filter(
+        asked_by=user
+    ).select_related(
+    ).prefetch_related(
+    )[:5]
     context = {
         "object_list": queryset,
         "user": user
@@ -125,7 +186,9 @@ def recent_user_answers(request, user_name):
         user = User.objects.get(username=user_name)
     except User.DoesNotExist:
         raise Http404
-    queryset = Answer.objects.filter(answered_by=user)[:5]
+    queryset = Answer.objects.filter(answered_by=user).select_related(
+        "answered_by", "answer_for"
+    )[:5]
     context = {
         "object_list": queryset,
         "user": user
