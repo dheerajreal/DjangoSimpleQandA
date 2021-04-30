@@ -1,15 +1,15 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
 
+from .forms import UserSignUpForm
 User = get_user_model()
 
 
 class SignUp(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = UserSignUpForm
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
 
