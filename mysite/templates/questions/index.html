@@ -1,5 +1,31 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
+{% if user.is_authenticated %}
+{% if not user.email%}
+<div class="container">
+    <div class="shadow card border-danger mt-4 col-12 col-md-10 col-lg-8 mx-auto">
+        <div class="card-body text-center">
+            <h4>
+                <a href="{% url 'user_email_update' %}">
+                    Add your email address to your account
+                </a>
+            </h4>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% else %}
+<div class="container">
+    <div class="shadow card border-danger mt-4 col-12 col-md-10 col-lg-8 mx-auto">
+        <div class="card-body text-center">
+            <h4>
+                <a href="{% url 'login' %}">You are not logged in. Login to access all features</a>
+            </h4>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="container">
     {% include "components/sortfiltercollapse.html" %}
 
@@ -27,7 +53,11 @@
         </div>
     </div>
     {% empty %}
-    <p>Nothing Here</p>
+    <div class="shadow card border-primary mt-4 col-12 col-md-10 col-lg-8 mx-auto">
+        <div class="card-body">
+            <p>Nothing Here</p>
+        </div>
+    </div>
     {% endfor %}
 </div>
 
