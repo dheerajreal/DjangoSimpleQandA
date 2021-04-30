@@ -15,10 +15,13 @@ from .views import (
     recent_user_answers,
     recent_user_questions,
     specific_user_detail,
+    QuestionSearchView
 )
 
 urlpatterns = [
     path('', QuestionListView.as_view(), name="index"),
+    path('q/search/',
+         QuestionSearchView.as_view(), name="question_search"),
     path('q/create/', QuestionCreateView.as_view(), name="question_create"),
     path('q/<int:pk>/', question_detail, name="question_detail"),
     path('q/<int:pk>/edit', QuestionUpdateView.as_view(),

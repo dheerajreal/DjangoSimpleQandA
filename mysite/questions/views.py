@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Count, Prefetch
+from django.db.models import Count, Prefetch, Q
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import Http404, get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView, UpdateView
@@ -251,3 +251,32 @@ def question_report(request, pk):
         "form": form
     }
     return render(request, template_name, context)
+
+
+class QuestionSearchView(LoginRequiredMixin, ListView):
+    template_name = "questions/index.html"
+
+    # paginate_by = settings.PAGINATE_BY
+
+    def get_queryset(self):
+        search_term = ""
+        queryset = Question.objects.annotate(
+            like_count=Count('likes')
+        ).order_by("-like_count").select_related(
+            "asked_by",
+        ).prefetch_related(
+            "likes"
+        ).prefetch_related(
+            Prefetch(
+                'answer_set'
+            )
+        )
+        search_term = self.request.GET.get('q', '')
+        queryset = queryset.filter(
+            Q(question_text__icontains=search_term)
+            |
+            Q(question_description__icontains=search_term)
+        )[:20]
+
+        # queryset = queryset.filter(question_description__icontains=search_term)
+        return queryset

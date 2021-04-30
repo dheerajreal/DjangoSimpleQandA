@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Prefetch
 from django.shortcuts import reverse
 
 User = get_user_model()
@@ -22,7 +23,7 @@ class QuestionReport(models.Model):
     )
 
     def __str__(self):
-        return f"{self.user}  Reported {self.question}"
+        return f"{self.user} :: Reported {self.question}:: {self.report_description}"
 
 
 class Question(models.Model):
@@ -55,6 +56,18 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['-asked_datetime']
+
+    @classmethod
+    def get_questions_queryset(cls):
+        return cls.objects.all().select_related(
+            "asked_by",
+        ).prefetch_related(
+            "likes"
+        ).prefetch_related(
+            Prefetch(
+                'answer_set'
+            )
+        )
 
 
 class Answer(models.Model):
