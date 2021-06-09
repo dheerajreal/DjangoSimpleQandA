@@ -9,7 +9,7 @@ django-crispy-forms = "*"
 whitenoise = "*"
 gunicorn = "*"
 python-decouple = "*"
-Django = "==2.2.21"
+Django = "==2.2.22"
 django-extensions = "*"
 psycopg2 = "*"
 
